@@ -1,76 +1,96 @@
-[Here Or Not]
-Author: [Syed Afnan Iftikhar, Sulab Karki]
+[ATTENDENCE TRACKER]
 
-Course: [CSC 307]
+**Authors:** Sulab Karki, Syed afnan Iftikhar, Samaya Tiwari
+**Course:** CSC 307 H002-H003
+**Semester:** SPRING 2026
 
-Semester: [Spring 2026]
-
-1. Prerequisites & Environment
 ---
+
+## 1. Prerequisites & Environment
+
 Before running this project, ensure your system meets the following requirements:
 
-Operating System: Windows 10/11, macOS, or Linux (Ubuntu/Debian recommended)
-
-Compiler: GCC (g++) 9.0+, Clang, or MSVC (Visual Studio 2019+)
-
-Standard: C++11 or higher (required for nullptr and modern string handling)
-
-Required Libraries
-
-This project is built using the C++ Standard Library, making it highly portable with no external dependencies required:
-
-iostream: Handles console input (cin) and output (cout).
-
-string: Manages student date records and names.
-
-
-2. Installation & Setup
-   ---
-Since this is a header-less single-file implementation, setup is straightforward:
-
-Download the Source: Save the code provided as AttendanceSystem.cpp.
-
-Terminal Access: Open your terminal (Command Prompt, PowerShell, or Bash).
-
-Directory: Navigate to the folder where you saved the file.
-
-
-3. Build Instructions
-   ---
-How do I compile the source code?
-
-Using Command Line (Recommended): ```bash
-g++ -o HereOrNot AttendanceSystem.cpp
-
-
-**Using Visual Studio:** * Create a new **C++ Empty Project**.
-* Add a new item `main.cpp` and paste the code.
-* Press **F5** to compile and run.
+- **Operating System:** Windows 10/11, Ubuntu 22.04+, or macOS (any recent version)
+- **Compiler:** GCC/g++ 9.0+ (MinGW on Windows), Clang 12+, or MSVC 2019+
+- **Build System:** any IDE
 
 ---
 
-## 4. Execution Guide 
-The program uses a hash table with **Chaining (Linked Lists)** to handle attendance records.
+### Required Libraries
 
-* **Executable Name:** `HereOrNot` (or `HereOrNot.exe` on Windows).
-* **Data Structure:** The system uses a **Hash Table** with 10 buckets. Each bucket contains a linked list of `Node` objects.
-* **Functionality:**
-    1. **Mark Present:** Hashes the Roll Number and adds a new node to the head of the corresponding bucket's list.
-    2. **Count Days:** Traverses the specific bucket list to count occurrences of a Roll Number.
-    3. **Remove Student:** Deletes all linked nodes associated with a specific Roll Number.
+List any external frameworks used:
 
-
+- `<iostream>` â€” Console input/output
+- `<fstream>` â€” File reading and writing for record persistence
+- `<string>` â€” String handling for dates and parsing
 
 ---
 
-## 5. Troubleshooting / Known Issues 
-* **Hash Collisions:** The current `bucket` size is set to 10. For a very large student body, this may lead to longer linked lists in each bucket, slightly slowing down performance.
-* **Input Validation:** The program expects `int` for choices and roll numbers. Entering a string when an integer is expected may cause an infinite loop in the menu.
-* **Case Sensitivity:** Dates are stored as strings; searching for "2026-may-01" will not match "2026-May-01".
+## 2. Installation & Setup
+
+No external libraries or installations are required beyond a working C++ compiler.
+
+1. Install a C++ compiler if you do not already have one:
+   - **Windows:** Install [MinGW-w64] and add the `bin` folder to your `PATH`, **or** install MSYS2.
+   - **Ubuntu/Debian:** `sudo apt install g++`
+   - **macOS:** Install Xcode Command Line Tools: `xcode-select --install`
+2. Download or clone the project source file (`main.cpp`) into a folder of your choice.
 
 ---
 
-## 6. Project Logic Summary
-The core of **[Here Or Not]** is the `HashTable` class:
-* **Hash Function:** Uses the modulo operator ($key \pmod{10}$) to determine the index.
-* **Memory Management:** The `removeStudent` and `removeDay` methods explicitly use the `delete` keyword to prevent memory leaks, ensuring that each node removed from the linked list is properly freed from the heap.
+## 3. Build Instructions
+
+**Using Command Line (Windows / Linux / macOS):**
+
+```bash
+g++ main.cpp -o attendance
+```
+
+This produces an executable file named `attendance` (or `attendance.exe` on Windows) in the same folder as `main.cpp`.
+
+**Using an IDE:**
+
+- **VS Code:** Open the folder, then run the C++ build task (default shortcut `Ctrl+Shift+B`).
+
+---
+
+## 4. Execution Guide
+
+Once built, the program is run from a terminal or directly through the IDE.
+
+- **Executable Name:** `attendance` (Linux/macOS) or `attendance.exe` (Windows)
+- **Entry Point:** No command-line arguments are required. Run with:
+
+  ```bash
+  ./attendance
+  ```
+
+- **Data File:** When the program runs, it reads from and writes to a file named `attendence.txt` located in the **current working directory** (the folder the executable was launched from). On the first run this file does not exist yet â€” it is created automatically the first time attendance is marked. On subsequent runs, all previous records are loaded from this file at startup.
+
+- **Menu Options:**
+  1. **Mark attendance** â€” Enter a date, then enter roll numbers one at a time. Type `stop` (lowercase) to finish.
+  2. **View attendance for a roll number** â€” Look up all dates a specific student attended.
+  3. **View all records** â€” Display every student in every bucket of the hash table.
+  4. **Edit a date for a student** â€” Replace one of a student's existing dates with a new one.
+  5. **Delete a date for a student** â€” Remove a single date from a student's record.
+  6. **Exit** â€” Closes the program. All data is already saved.
+
+- **Sample Workflow:**
+
+  ```
+  Select taske: 1
+  Enter date for today's attendance: January 5
+  Enter rollnumber (or 'stop' to finish): 1021527
+  Enter rollnumber (or 'stop' to finish): 1021888
+  Enter rollnumber (or 'stop' to finish): stop
+  ```
+
+---
+
+## 5. Troubleshooting / Known Issues
+
+- **`attendence.txt` not appearing where expected:** When run from an IDE, the working directory is often the IDE's project/build folder rather than the folder containing `main.cpp`. Search your project folder recursively for `attendence.txt` to locate it, or run the executable directly from a terminal.
+- **The `stop` keyword is case-sensitive:** During attendance marking, only lowercase `stop` will end the input loop. `Stop` or `STOP` will be treated as invalid roll numbers.
+- **Roll numbers must be positive integers:** Any input that contains letters, symbols, or is zero/negative will be rejected with an error message and the program will prompt again. The program will not crash.
+- **Hash table size is fixed at 10 buckets:** Defined by the constant `tablesize` near the top of the source file. Multiple students whose roll numbers share the same `% 10` result are chained together using a linked list (separate chaining collision handling). To change the table size, edit the `tablesize` constant and recompile.
+- **Data file format:** `attendence.txt` stores one record per line in the format `rollnumber,date`. The file can be viewed or edited manually with any text editor, but malformed lines will be silently skipped when loading.
