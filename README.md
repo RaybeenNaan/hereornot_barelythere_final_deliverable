@@ -4,9 +4,9 @@ Author: [Syed Afnan Iftikhar, Sulab Karki]
 Course: [CSC 307]
 
 Semester: [Spring 2026]
----
 
 1. Prerequisites & Environment
+---
 Before running this project, ensure your system meets the following requirements:
 
 Operating System: Windows 10/11, macOS, or Linux (Ubuntu/Debian recommended)
@@ -22,9 +22,10 @@ This project is built using the C++ Standard Library, making it highly portable 
 iostream: Handles console input (cin) and output (cout).
 
 string: Manages student date records and names.
----
+
 
 2. Installation & Setup
+   ---
 Since this is a header-less single-file implementation, setup is straightforward:
 
 Download the Source: Save the code provided as AttendanceSystem.cpp.
@@ -32,9 +33,10 @@ Download the Source: Save the code provided as AttendanceSystem.cpp.
 Terminal Access: Open your terminal (Command Prompt, PowerShell, or Bash).
 
 Directory: Navigate to the folder where you saved the file.
----
+
 
 3. Build Instructions
+   ---
 How do I compile the source code?
 
 Using Command Line (Recommended): ```bash
