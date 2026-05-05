@@ -1,8 +1,8 @@
 [ATTENDENCE TRACKER]
 
 **Authors:** Sulab Karki, Syed afnan Iftikhar, Samaya Tiwari
--**Course:** CSC 307 H002-H003
--**Semester:** SPRING 2026
+- **Course:** CSC 307 H002-H003
+- **Semester:** SPRING 2026
 
 ---
 
